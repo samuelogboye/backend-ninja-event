@@ -21,6 +21,16 @@ class UserData(db.Model):
 def index():
     return render_template('index.html')
 
+# Endpoint to return my information
+@app.route('/about', methods=['GET'])
+def about():
+    my_info = {
+        'name': 'Samuel Ogboye',
+        'github_url': 'https://github.com/samuelogboye',
+        'gender': 'Male',
+    }
+    return jsonify(my_info), 200
+
 # Endpoint to get all data
 @app.route('/data', methods=['GET'])
 def get_all_data():
