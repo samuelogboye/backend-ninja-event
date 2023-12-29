@@ -86,8 +86,9 @@ def create_data():
 #     db.session.delete(data)
 #     db.session.commit()
 #     return jsonify({'message': 'Data deleted successfully'})
+#just for testing
 
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
-        app.run(debug=True)
+        app.run(debug=False)
