@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Backend NINJA</title>
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        font-family: Arial, sans-serif;
+      }
+      table {
+        border-collapse: collapse;
+        width: 80%;
+        margin: auto;
+      }
+      th,
+      td {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+      }
+      th {
+        background-color: #f2f2f2;
+      }
+    </style>
+  </head>
+  <body>
+    <table>
+      <thead>
+        <tr>
+          <th colspan="6" style="text-align: center">BACKEND NINJA</th>
+        </tr>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Endpoint URL</th>
+          <th>Github URL</th>
+          <th>Created Time</th>
+          <th>Updated Time</th>
+        </tr>
+      </thead>
+      <tbody id="dataBody"></tbody>
+    </table>
+    <script>
+      // Fetch data from the Flask endpoint
+      fetch("/data")
+        .then((response) => response.json())
+        .then((data) => {
+          const dataBody = document.getElementById("dataBody");
+          data.forEach((item) => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+            <td>${item.id}</td>
+            <td>${item.name}</td>
+            <td><a href="http://${item.endpoint_url}" target="_blank">${item.endpoint_url}</a></td>
+            <td><a href="http://${item.github_url}" target="_blank">${item.github_url}</a></td>
+            <td>${item.created_at}</td>
+            <td>${item.updated_at}</td>
+          `;
+            dataBody.appendChild(row);
+          });
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    </script>
+  </body>
+</html>
