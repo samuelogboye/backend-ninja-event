@@ -54,9 +54,11 @@ def get_data(data_id):
 @app.route('/data', methods=['POST'])
 def create_data():
     request_data = request.get_json()
-    if not 'name' or 'endpoint_url' or 'github_url' in request_data:
+
+    required_fields = ['name', 'endpoint_url', 'github_url']
+    if not all(field in request_data for field in required_fields):
         return jsonify({'message': 'invalid data'}), 400
-    # make the urls optional
+
     new_data = UserData(
         name=request_data['name'],
         endpoint_url=request_data.get('endpoint_url', ''),
@@ -64,6 +66,7 @@ def create_data():
     )
     db.session.add(new_data)
     db.session.commit()
+
     return jsonify({'message': 'Data created successfully'}), 201
 
 # # Endpoint to update data
